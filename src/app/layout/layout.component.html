@@ -1,1 +1,11 @@
-<p>layout works!</p>
+<form>
+  <div class="form-group" *ngFor="let number of numbers">
+    <p-checkbox color="primary" stroke="fill" [value]="number.value" (change)="onCheckboxChange($event)">
+      {{number.name}}
+    </p-checkbox>
+  </div>
+</form>
+
+<hr>
+
+<p>Números seleccionados: {{checkboxForm.value.number | json}}</p>
