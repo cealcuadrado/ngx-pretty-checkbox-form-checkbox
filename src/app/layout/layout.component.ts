@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { PrettyCheckBoxChange } from 'ngx-pretty-checkbox';
@@ -18,7 +19,8 @@ export class LayoutComponent implements OnInit {
   checkboxForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) { }
 
   foo(): void {
@@ -54,7 +56,7 @@ export class LayoutComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log(this.checkboxForm.value);
+    this.toastr.success(`Opciones seleccionadas: ${this.checkboxForm.value.number.toString()}`, 'Formulario enviado');
   }
 
   notEmptyValidator(): ValidatorFn {
