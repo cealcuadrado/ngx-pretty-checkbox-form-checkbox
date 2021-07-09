@@ -1,11 +1,21 @@
-<form>
+<p>Se debe seleccionar al menos un valor.</p>
+
+<hr>
+
+<form (ngSubmit)="submitForm()">
   <div class="form-group" *ngFor="let number of numbers">
     <p-checkbox color="primary" stroke="fill" [value]="number.value" (change)="onCheckboxChange($event)">
       {{number.name}}
     </p-checkbox>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary" [disabled]="checkboxForm.invalid">
+      Enviar
+    </button>
   </div>
 </form>
 
 <hr>
 
 <p>Números seleccionados: {{checkboxForm.value.number | json}}</p>
+<p>¿Formulario valido?: {{checkboxForm.valid}}</p>

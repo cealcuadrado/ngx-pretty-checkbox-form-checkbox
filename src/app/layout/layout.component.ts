@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { PrettyCheckBoxChange } from 'ngx-pretty-checkbox';
 
 @Component({
@@ -34,7 +34,7 @@ export class LayoutComponent implements OnInit {
   onCheckboxChange(event: PrettyCheckBoxChange): void {
     const name = event.value;
     const isChecked = event.checked;
-    
+
     const numbers = (this.checkboxForm.controls.number as FormArray);
 
     if (isChecked) {
@@ -47,7 +47,21 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkboxForm = this.fb.group({
-      number: this.fb.array([])
+      number: this.fb.array(
+        [], [this.notEmptyValidator()]
+      )
     });
+  }
+
+  submitForm(): void {
+    console.log(this.checkboxForm.value);
+  }
+
+  notEmptyValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      const arrayEmpty = (value.length == 0);
+      return arrayEmpty ? { arrayEmpty: true } : null;
+    }
   }
 }
